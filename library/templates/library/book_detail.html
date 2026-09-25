@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ book.title }} | Biblioteca</title>
+    <style>
+        :root {
+            --ink: #18232b;
+            --muted: #6f7b7d;
+            --paper: #f5f1e9;
+            --card: #fffdf8;
+            --teal: #176b67;
+            --coral: #d86b55;
+            --line: #dfe2d8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: Georgia, 'Times New Roman', serif;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1180px;
+            margin: auto;
+            padding: 28px 32px;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+
+        .brand {
+            color: var(--teal);
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-decoration: none;
+        }
+
+        .admin-link {
+            color: var(--ink);
+            font-size: .85rem;
+            text-decoration: none;
+            border-bottom: 1px solid var(--coral);
+            padding-bottom: 4px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(190px, 260px) 1fr;
+            gap: clamp(32px, 7vw, 94px);
+            align-items: center;
+            max-width: 1180px;
+            margin: 30px auto 0;
+            padding: 35px 32px 75px;
+        }
+
+        .cover {
+            position: relative;
+            aspect-ratio: 2 / 3;
+            display: grid;
+            place-items: end start;
+            padding: 25px;
+            overflow: hidden;
+            color: #fffaf0;
+            background: linear-gradient(145deg, #174e52, #25857a 55%, #d86b55);
+            box-shadow: 18px 20px 0 #d6ddd2;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            top: 22px;
+            right: -50px;
+            border: 1px solid rgba(255,255,255,.5);
+            border-radius: 50%;
+            box-shadow: 0 0 0 24px rgba(255,255,255,.08), 0 0 0 48px rgba(255,255,255,.06);
+        }
+
+        .cover-label { position: relative; }
+        .cover-label small {
+            display: block;
+            margin-bottom: 12px;
+            font: 700 .7rem/1.2 'Trebuchet MS', sans-serif;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+        .cover-label strong {
+            display: block;
+            max-width: 190px;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            line-height: .95;
+        }
+
+        .eyebrow {
+            margin: 0 0 16px;
+            color: var(--coral);
+            font: 700 .75rem 'Trebuchet MS', sans-serif;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 750px;
+            margin: 0 0 23px;
+            font-size: clamp(2.5rem, 6vw, 5.8rem);
+            font-weight: 400;
+            line-height: .95;
+        }
+
+        .lead {
+            max-width: 650px;
+            margin: 0 0 28px;
+            color: var(--muted);
+            font-size: 1.15rem;
+            line-height: 1.55;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 28px;
+            color: var(--muted);
+            font: .8rem 'Trebuchet MS', sans-serif;
+        }
+
+        .meta strong { color: var(--ink); }
+
+        .details {
+            background: var(--card);
+            border-top: 1px solid var(--line);
+        }
+
+        .details-inner {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 70px;
+            max-width: 1180px;
+            margin: auto;
+            padding: 60px 32px 85px;
+        }
+
+        .section-label {
+            margin: 0 0 20px;
+            color: var(--teal);
+            font: 700 .75rem 'Trebuchet MS', sans-serif;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+
+        .author-name {
+            margin: 0 0 9px;
+            font-size: 2rem;
+            font-weight: 400;
+        }
+
+        .author-email, .bio, .edition-date {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .bio { max-width: 540px; margin: 20px 0; }
+
+        .website {
+            color: var(--coral);
+            font: 700 .8rem 'Trebuchet MS', sans-serif;
+            text-decoration: none;
+        }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 9px; }
+
+        .tag {
+            padding: 9px 13px;
+            color: var(--teal);
+            background: #e2efea;
+            border-radius: 2px;
+            font: 700 .78rem 'Trebuchet MS', sans-serif;
+        }
+
+        .publication {
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .publisher {
+            margin: 0 0 5px;
+            font-size: 1.35rem;
+            font-weight: 400;
+        }
+
+        footer {
+            max-width: 1180px;
+            margin: auto;
+            padding: 22px 32px;
+            color: var(--muted);
+            font: .75rem 'Trebuchet MS', sans-serif;
+        }
+
+        @media (max-width: 700px) {
+            header { padding: 22px 20px; }
+            .hero { grid-template-columns: 125px 1fr; gap: 28px; margin-top: 10px; padding: 25px 20px 60px; }
+            .cover { padding: 13px; box-shadow: 9px 10px 0 #d6ddd2; }
+            .cover-label small { font-size: .5rem; margin-bottom: 7px; }
+            .cover-label strong { font-size: 1.15rem; }
+            h1 { font-size: 2.4rem; }
+            .lead { font-size: .95rem; }
+            .meta { display: block; line-height: 1.8; }
+            .details-inner { grid-template-columns: 1fr; gap: 45px; padding: 45px 20px 60px; }
+            footer { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a class="brand" href="/libros/1/">Biblioteca / Archivo</a>
+        <a class="admin-link" href="/admin/">Gestionar catálogo</a>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="cover" aria-label="Portada de {{ book.title }}">
+                <div class="cover-label">
+                    <small>Lectura destacada</small>
+                    <strong>{{ book.title }}</strong>
+                </div>
+            </div>
+            <div>
+                <p class="eyebrow">Ficha bibliográfica · 01</p>
+                <h1>{{ book.title }}</h1>
+                <p class="lead">Una edición registrada en nuestro catálogo, con sus relaciones editoriales y la historia de su autor reunidas en un solo lugar.</p>
+                <div class="meta">
+                    <span><strong>ISBN</strong> {{ book.isbn }}</span>
+                    <span><strong>Publicado</strong> {{ book.published_date }}</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="details">
+            <div class="details-inner">
+                <div>
+                    <p class="section-label">Sobre el autor</p>
+                    <h2 class="author-name">{{ book.autor.name }}</h2>
+                    <div class="author-email">{{ book.autor.email }}</div>
+                    {% if book.autor.profile %}
+                        <p class="bio">{{ book.autor.profile.biography }}</p>
+                        {% if book.autor.profile.website %}
+                            <a class="website" href="{{ book.autor.profile.website }}">Visitar sitio del autor →</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <div>
+                    <p class="section-label">Categorías</p>
+                    <div class="tags">
+                        {% for category in book.categories.all %}
+                            <span class="tag">{{ category.name }}</span>
+                        {% empty %}
+                            <span class="tag">Sin categorías</span>
+                        {% endfor %}
+                    </div>
+
+                    <p class="section-label" style="margin-top: 48px;">Ediciones y editoriales</p>
+                    {% for publication in book.publication_set.all %}
+                        <div class="publication">
+                            <h3 class="publisher">{{ publication.publisher.name }}</h3>
+                            <div class="edition-date">Edición {{ publication.edition }} · {{ publication.publication_date }}</div>
+                        </div>
+                    {% empty %}
+                        <div class="edition-date">Sin publicaciones registradas</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>Catálogo académico · Relaciones modeladas con Django</footer>
+</body>
+</html>
