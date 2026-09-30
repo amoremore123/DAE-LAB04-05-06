@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recomendaciones para {{ book.title }} | Biblioteca</title>
+    <style>
+        :root { --ink: #18232b; --muted: #6f7b7d; --paper: #f5f1e9; --card: #fffdf8; --teal: #176b67; --coral: #d86b55; --line: #dfe2d8; }
+        * { box-sizing: border-box; }
+        body { margin: 0; color: var(--ink); background: var(--paper); font-family: Georgia, 'Times New Roman', serif; }
+        header, main, footer { max-width: 1180px; margin: auto; padding-left: 32px; padding-right: 32px; }
+        header { display: flex; justify-content: space-between; align-items: center; padding-top: 28px; padding-bottom: 28px; font-family: 'Trebuchet MS', sans-serif; }
+        a { color: inherit; }
+        .brand { color: var(--teal); font-size: 1.2rem; font-weight: 700; letter-spacing: .04em; text-decoration: none; }
+        .admin { font-size: .85rem; text-decoration: none; border-bottom: 1px solid var(--coral); padding-bottom: 4px; }
+        .intro { padding: 56px 0 40px; border-bottom: 1px solid var(--line); }
+        .eyebrow, .section-label { color: var(--coral); font: 700 .75rem 'Trebuchet MS', sans-serif; letter-spacing: .15em; text-transform: uppercase; }
+        h1 { max-width: 850px; margin: 15px 0; font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 400; line-height: .95; }
+        .intro-copy { color: var(--muted); font-size: 1.05rem; line-height: 1.55; }
+        .results { padding: 38px 0 75px; }
+        .section-label { color: var(--teal); }
+        .item { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; padding: 22px 24px; margin-top: 12px; background: var(--card); border: 1px solid var(--line); text-decoration: none; }
+        .item:hover { border-color: var(--teal); }
+        h2 { margin: 0 0 7px; font-size: 1.5rem; font-weight: 400; }
+        .author, .categories { margin: 0; color: var(--muted); font: .85rem 'Trebuchet MS', sans-serif; }
+        .categories { margin-top: 8px; }
+        .score { color: var(--teal); font: 700 .9rem 'Trebuchet MS', sans-serif; white-space: nowrap; }
+        .empty { padding: 24px; background: var(--card); color: var(--muted); }
+        .back { display: inline-block; margin-top: 28px; color: var(--coral); font: 700 .82rem 'Trebuchet MS', sans-serif; text-decoration: none; }
+        footer { padding-top: 22px; padding-bottom: 22px; color: var(--muted); font: .75rem 'Trebuchet MS', sans-serif; }
+        @media (max-width: 600px) { header, main, footer { padding-left: 20px; padding-right: 20px; } .intro { padding-top: 38px; } .item { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <a class="brand" href="/">Biblioteca / Archivo</a>
+        <a class="admin" href="/admin/">Gestionar catálogo</a>
+    </header>
+    <main>
+        <section class="intro">
+            <p class="eyebrow">Lecturas relacionadas</p>
+            <h1>Si te interesa <em>{{ book.title }}</em></h1>
+            <p class="intro-copy">Libros que comparten categorías, ordenados por el promedio de sus valoraciones.</p>
+        </section>
+        <section class="results">
+            <p class="section-label">Recomendaciones</p>
+            {% for recommendation in recommendations %}
+                <a class="item" href="{% url 'book-detail' recommendation.pk %}">
+                    <div>
+                        <h2>{{ recommendation.title }}</h2>
+                        <p class="author">{{ recommendation.autor.name }}</p>
+                        <p class="categories">
+                            {% for category in recommendation.categories.all %}
+                                {{ category.name }}{% if not forloop.last %} · {% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                    <span class="score">{{ recommendation.average_score|floatformat:1 }}/5 · {{ recommendation.rating_count }} valoraciones</span>
+                </a>
+            {% empty %}
+                <p class="empty">Todavía no hay libros de categorías compartidas con valoraciones.</p>
+            {% endfor %}
+            <a class="back" href="{% url 'book-detail' book.pk %}">← Volver al libro</a>
+        </section>
+    </main>
+    <footer>Catálogo académico · Recomendaciones calculadas desde las relaciones del catálogo</footer>
+</body>
+</html>
