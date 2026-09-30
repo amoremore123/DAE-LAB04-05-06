@@ -28,5 +28,5 @@ La base SQLite y el entorno virtual son locales y no se versionan. Las migracion
 ## Estado de los laboratorios
 
 - Lab 04: modelos y relaciones de la biblioteca, consultas y vista pública.
-- Lab 05: administración personalizada, valoraciones, permisos y recomendaciones; en desarrollo.
+- Lab 05: administración personalizada, valoraciones, permisos y recomendaciones.
 - Lab 06: se incorporará al mismo proyecto cuando se defina el procedimiento de la sesión.
