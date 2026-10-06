@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Pulso Local | Noticias{% endblock %}
+
+{% block content %}
+    <section class="page-heading">
+        <p class="section-kicker">Edición digital</p>
+        <h1>Noticias para mirar de cerca.</h1>
+        <p>Una portada construida con datos administrados desde Django.</p>
+    </section>
+
+    <section class="article-list" aria-label="Noticias publicadas">
+        {% for article in articles %}
+            {% include 'news/_article_card.html' with article=article %}
+        {% empty %}
+            <p class="empty-state">Todavía no hay noticias publicadas.</p>
+        {% endfor %}
+    </section>
+{% endblock %}
+
+{% block sidebar %}
+    <p class="sidebar-label">La portada</p>
+    <p>Las noticias se ordenan por su fecha de publicación y se cargan desde la base de datos.</p>
+    <a class="text-link" href="{% url 'admin:index' %}">Añadir noticia</a>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} | Pulso Local{% endblock %}
+
+{% block content %}
+    <article class="article-detail">
+        <p class="article-date">{{ article.published_at|date:"d \d\e F \d\e Y" }}</p>
+        <h1>{{ article.title }}</h1>
+        <p class="article-standfirst">{{ article.summary }}</p>
+
+        {% if article.featured_image %}
+            <img class="detail-image" src="{{ article.featured_image.url }}" alt="Imagen destacada de {{ article.title }}">
+        {% endif %}
+
+        <div class="detail-byline">
+            <span>Por <strong>{{ article.author.name }}</strong></span>
+            <span>
+                {% for category in article.categories.all %}
+                    <a href="{% url 'news:category' category.slug %}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+
+        <div class="article-body">{{ article.body|linebreaksbr }}</div>
+    </article>
+{% endblock %}
+
+{% block sidebar %}
+    <p class="sidebar-label">Autor</p>
+    <h2>{{ article.author.name }}</h2>
+    {% if article.author.biography %}
+        <p>{{ article.author.biography }}</p>
+    {% else %}
+        <p>Autor registrado en el portal.</p>
+    {% endif %}
+    <a class="text-link" href="{% url 'news:home' %}">Volver a la portada</a>
+{% endblock %}

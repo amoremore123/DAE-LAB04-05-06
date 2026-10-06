@@ -1,0 +1,43 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Pulso Local{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'news/css/portal.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="site-name" href="{% url 'news:home' %}">Pulso Local</a>
+            <nav class="site-nav" aria-label="Navegación principal">
+                <a href="{% url 'news:home' %}">Noticias</a>
+                <a href="{% url 'book-list' %}">Biblioteca</a>
+                <a href="{% url 'admin:index' %}">Administrar</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="masthead">
+        <p>Portal informativo · Desarrollo de Aplicaciones Empresariales</p>
+    </div>
+
+    <div class="page-layout">
+        <main class="page-content">
+            {% block content %}{% endblock %}
+        </main>
+        <aside class="sidebar">
+            {% block sidebar %}
+                <p class="sidebar-label">Información</p>
+                <p>Noticias publicadas desde el administrador de Django.</p>
+                <a class="text-link" href="{% url 'admin:index' %}">Gestionar contenido</a>
+            {% endblock %}
+        </aside>
+    </div>
+
+    <footer class="site-footer">
+        <p>Pulso Local · Plantillas con Django</p>
+    </footer>
+</body>
+</html>

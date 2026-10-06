@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} | Pulso Local{% endblock %}
+
+{% block content %}
+    <section class="page-heading compact-heading">
+        <p class="section-kicker">Categoría</p>
+        <h1>{{ category.name }}</h1>
+        {% if category.description %}
+            <p>{{ category.description }}</p>
+        {% endif %}
+    </section>
+
+    <section class="article-list" aria-label="Noticias de {{ category.name }}">
+        {% for article in articles %}
+            {% include 'news/_article_card.html' with article=article %}
+        {% empty %}
+            <p class="empty-state">No hay noticias en esta categoría todavía.</p>
+        {% endfor %}
+    </section>
+{% endblock %}
+
+{% block sidebar %}
+    <p class="sidebar-label">Categoría actual</p>
+    <p>Estás leyendo las noticias clasificadas como {{ category.name }}.</p>
+    <a class="text-link" href="{% url 'news:home' %}">Ver todas las noticias</a>
+{% endblock %}
