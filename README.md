@@ -1,6 +1,6 @@
 # DAE Labs 04, 05 y 06
 
-Proyecto acumulativo de Desarrollo de Aplicaciones Empresariales sobre una biblioteca digital. Se conserva el dominio de autores, libros, categorías y editoriales para desarrollar los laboratorios 04, 05 y 06 en una sola aplicación Django.
+Proyecto acumulativo de Desarrollo de Aplicaciones Empresariales. Conserva la biblioteca digital de los laboratorios 04 y 05, e incorpora el portal de noticias del laboratorio 06 como una aplicación independiente.
 
 ## Requisitos
 
@@ -16,11 +16,13 @@ py -m venv .venv
 python -m pip install -r requirements.txt
 python manage.py migrate
 python manage.py seed_demo
+python manage.py seed_news_demo
 python manage.py createsuperuser
 python manage.py runserver
 ```
 
 - Catálogo: http://127.0.0.1:8000/
+- Noticias: http://127.0.0.1:8000/noticias/
 - Administración: http://127.0.0.1:8000/admin/
 
 La base SQLite y el entorno virtual son locales y no se versionan. Las migraciones sí se guardan en Git.
@@ -29,4 +31,4 @@ La base SQLite y el entorno virtual son locales y no se versionan. Las migracion
 
 - Lab 04: modelos y relaciones de la biblioteca, consultas y vista pública.
 - Lab 05: administración personalizada, valoraciones, permisos y recomendaciones.
-- Lab 06: se incorporará al mismo proyecto cuando se defina el procedimiento de la sesión.
+- Lab 06: portal de noticias con plantillas heredadas, fragmentos reutilizables, archivos estáticos y medios.
